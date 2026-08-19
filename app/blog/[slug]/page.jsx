@@ -17,14 +17,15 @@ export function generateMetadata({ params }) {
   if (!post) return {};
 
   return pageMeta({
-    title: post.title,
-    description: post.intro,
+    title: post.seoTitle ?? post.title,
+    description: post.excerpt,
     path: `/blog/${post.slug}`,
     eyebrow: post.tag,
     socialTitle: post.title,
     type: "article",
     publishedTime: post.publishedAt,
     tags: post.keywords,
+    absoluteTitle: true,
   });
 }
 

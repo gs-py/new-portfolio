@@ -4,7 +4,7 @@ import { pageMeta } from "@/lib/seo";
 import { breadcrumbSchema, graph, projectsSchema, webPageSchema } from "@/lib/schema";
 
 const description =
-  "Selected projects by Gladwin Santhosh — agentic AI tooling, deepfake detection with ResNeXt and LSTM, a full-stack SaaS music platform, and production business sites.";
+  "Selected projects by Gladwin Santhosh: agentic AI tooling, deepfake detection with ResNeXt and LSTM, a SaaS music platform, and production business sites.";
 
 export const metadata = pageMeta({
   title: "Work",

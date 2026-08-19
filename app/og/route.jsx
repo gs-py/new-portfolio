@@ -8,7 +8,12 @@ export const contentType = "image/png";
 
 const host = SITE_URL.replace(/^https?:\/\//, "");
 
-const clamp = (value, max) => (value.length > max ? `${value.slice(0, max - 1).trimEnd()}…` : value);
+/** Truncate on a word boundary — a card cut mid-word reads as broken. */
+const clamp = (value, max) => {
+  if (value.length <= max) return value;
+  const cut = value.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).trimEnd() || cut.trimEnd()}…`;
+};
 
 /**
  * Satori has no bundled bold face, so the headline font is fetched once per
@@ -32,7 +37,7 @@ const displayFont = () => {
 export async function GET(request) {
   const params = request.nextUrl.searchParams;
   const title = clamp(params.get("title") || profile.name, 84);
-  const subtitle = clamp(params.get("subtitle") || profile.role, 150);
+  const subtitle = clamp(params.get("subtitle") || profile.role, 128);
   const eyebrow = clamp(params.get("eyebrow") || profile.role, 42);
   const font = await displayFont();
   // Never emit `fontFamily: undefined` — satori calls .split() on it and throws.
@@ -52,12 +57,13 @@ export async function GET(request) {
           color: "#1e1f26",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 20, flexShrink: 0 }}>
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexShrink: 0,
               width: 72,
               height: 72,
               borderRadius: 22,
@@ -76,7 +82,7 @@ export async function GET(request) {
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "center", paddingTop: 24, paddingBottom: 24 }}>
           <div
             style={{
               display: "flex",
@@ -95,8 +101,8 @@ export async function GET(request) {
           </div>
           <div
             style={{
-              marginTop: 28,
-              fontSize: title.length > 46 ? 60 : 74,
+              marginTop: 26,
+              fontSize: title.length > 60 ? 54 : title.length > 40 ? 62 : 74,
               lineHeight: 1.08,
               letterSpacing: -1.5,
               ...display,
@@ -104,12 +110,12 @@ export async function GET(request) {
           >
             {title}
           </div>
-          <div style={{ marginTop: 24, fontSize: 27, lineHeight: 1.45, color: "#565863", maxWidth: 940 }}>
+          <div style={{ marginTop: 22, fontSize: 25, lineHeight: 1.4, color: "#565863", maxWidth: 960 }}>
             {subtitle}
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, flexShrink: 0 }}>
           <div style={{ width: 84, height: 8, borderRadius: 999, background: "#4c4fd4" }} />
           <div style={{ fontSize: 22, color: "#666875" }}>React · Next.js · FastAPI · React Native · ML</div>
         </div>

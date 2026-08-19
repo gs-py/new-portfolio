@@ -1,4 +1,4 @@
-import { posts, projects } from "@/lib/data";
+import { posts } from "@/lib/data";
 import { SITE_URL, abs } from "@/lib/seo";
 
 /** Rebuilt on every deploy, so build time is an honest lastModified. */
@@ -7,7 +7,9 @@ const buildDate = new Date();
 export default function sitemap() {
   const routes = [
     { path: "/", priority: 1, changeFrequency: "monthly" },
-    { path: "/work", priority: 0.9, changeFrequency: "monthly", images: projects.map((p) => abs(p.image)) },
+    // ponytail: no image sitemap — next@14.2 drops the `images` field silently.
+    // Google still finds them in the page HTML. Revisit on Next 15.
+    { path: "/work", priority: 0.9, changeFrequency: "monthly" },
     { path: "/services", priority: 0.8, changeFrequency: "yearly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/resume", priority: 0.7, changeFrequency: "monthly" },
@@ -17,7 +19,6 @@ export default function sitemap() {
     lastModified: buildDate,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
-    ...(route.images ? { images: route.images } : {}),
   }));
 
   const articles = posts.map((post) => ({

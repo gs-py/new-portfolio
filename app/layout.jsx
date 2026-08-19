@@ -31,7 +31,6 @@ export const metadata = {
   creator: profile.name,
   publisher: profile.name,
   category: "technology",
-  alternates: { canonical: abs("/") },
   manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
