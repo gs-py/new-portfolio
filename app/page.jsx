@@ -7,7 +7,7 @@ import Social from "@/components/Social";
 import { headlineStats, profile, projects, skillGroups } from "@/lib/data";
 
 const Home = () => {
-  const [lead, ...rest] = projects;
+  const [lead, ...rest] = projects.slice(0, 3);
 
   return (
     <>
@@ -87,7 +87,7 @@ const Home = () => {
                   alt={lead.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]"
+                  className="object-contain transition-transform duration-700 ease-soft group-hover:scale-[1.03]"
                 />
               </span>
               <span className="flex flex-1 flex-col gap-3 px-4 pb-4 pt-6">

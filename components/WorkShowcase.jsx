@@ -18,7 +18,10 @@ const WorkShowcase = () => {
   return (
     <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-16">
       {/* rail: the selected project sits pressed in */}
-      <div className="order-2 flex gap-3 overflow-x-auto pb-1 lg:order-none lg:w-[260px] lg:shrink-0 lg:flex-col lg:self-start lg:overflow-visible lg:pb-0">
+      <div
+        className="no-scrollbar order-2 flex gap-3 overflow-x-auto pb-1 lg:order-none lg:max-h-[430px] lg:w-[276px] lg:shrink-0
+                   lg:flex-col lg:self-start lg:overflow-y-auto lg:overflow-x-visible lg:px-2 lg:py-2"
+      >
         {projects.map((item, i) => {
           const active = i === index;
           return (
@@ -84,15 +87,17 @@ const WorkShowcase = () => {
                     <FiArrowUpRight />
                   </Link>
                 )}
-                <Link
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="neu-press flex h-[60px] w-[60px] items-center justify-center !rounded-full text-xl text-ink hover:text-accent"
-                  aria-label={`${project.title} — source on GitHub`}
-                >
-                  <FaGithub />
-                </Link>
+                {project.github && (
+                  <Link
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="neu-press flex h-[60px] w-[60px] items-center justify-center !rounded-full text-xl text-ink hover:text-accent"
+                    aria-label={`${project.title} — source on GitHub`}
+                  >
+                    <FaGithub />
+                  </Link>
+                )}
 
                 <div className="ml-auto flex items-center gap-3">
                   <button
@@ -119,15 +124,21 @@ const WorkShowcase = () => {
             </div>
 
             <div className="self-start rounded-[32px] bg-surface p-4 shadow-neu">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-surface-sunk shadow-neu-in-sm">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover"
-                  priority={index === 0}
-                />
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-surface-sunk shadow-neu-in-sm">
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 45vw"
+                    className="object-contain"
+                    priority={index === 0}
+                  />
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center px-8 text-center font-display text-[clamp(1.5rem,3vw,2.2rem)] font-bold leading-tight engraved">
+                    {project.title}
+                  </span>
+                )}
               </div>
             </div>
           </motion.div>
