@@ -33,13 +33,6 @@ export const metadata = {
   category: "technology",
   alternates: { canonical: abs("/") },
   manifest: "/manifest.webmanifest",
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
-    shortcut: "/favicon.ico",
-  },
   openGraph: {
     type: "website",
     url: abs("/"),
