@@ -23,7 +23,7 @@ const Header = () => {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 bg-surface/85 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 bg-surface">
       <div className="container flex h-[76px] items-center justify-between gap-6">
         <Link href="/" className="group flex items-center gap-3" aria-label="Gladwin Santhosh — home">
           <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-surface font-display text-[15px] font-bold text-accent shadow-neu-sm transition-shadow duration-300 ease-soft group-hover:shadow-neu">

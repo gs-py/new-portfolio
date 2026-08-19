@@ -141,6 +141,17 @@
     @apply w-full rounded-2xl bg-surface px-5 py-4 text-[15px] text-ink shadow-neu-in-sm outline-none
            transition-shadow duration-300 ease-soft placeholder:text-ink-faint;
   }
+  /* Empty required select reads as a placeholder; the chevron is drawn, not native. */
+  select.field {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23565863' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    padding-right: 3rem;
+  }
+  select.field:invalid {
+    color: theme(colors.ink.faint);
+  }
+
   .field:focus {
     box-shadow: inset 4px 4px 9px #c9cad1, inset -4px -4px 9px #ffffff, 0 0 0 2px rgba(76, 79, 212, 0.4);
   }

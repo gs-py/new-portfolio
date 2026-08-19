@@ -30,7 +30,11 @@ const Blog = () => (
               {post.title}
             </h2>
 
-            <dl className="mt-8 grid grid-cols-2 gap-y-7 rounded-[24px] px-6 py-7 shadow-neu-in sm:grid-cols-4">
+            <dl
+              className={`mt-8 grid grid-cols-2 gap-y-7 rounded-[24px] px-6 py-7 shadow-neu-in ${
+                post.metrics.length === 4 ? "sm:grid-cols-4" : "sm:grid-cols-3"
+              }`}
+            >
               {post.metrics.map((metric) => (
                 <div key={metric.label} className="text-center">
                   <dt className="sr-only">{metric.label}</dt>

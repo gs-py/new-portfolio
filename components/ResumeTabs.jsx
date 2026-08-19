@@ -31,7 +31,7 @@ const ResumeTabs = () => {
       <div
         role="tablist"
         aria-label="Resume sections"
-        className="flex shrink-0 gap-2 overflow-x-auto rounded-[26px] p-2 shadow-neu-in lg:w-[240px] lg:flex-col lg:overflow-visible lg:rounded-[30px] lg:p-3"
+        className="flex shrink-0 gap-2 overflow-x-auto rounded-[26px] p-2 shadow-neu-in lg:sticky lg:top-[92px] lg:w-[240px] lg:flex-col lg:self-start lg:overflow-visible lg:rounded-[30px] lg:p-3"
       >
         {TABS.map((name) => {
           const active = tab === name;

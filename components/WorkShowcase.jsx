@@ -18,7 +18,7 @@ const WorkShowcase = () => {
   return (
     <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-16">
       {/* rail: the selected project sits pressed in */}
-      <div className="order-2 flex gap-3 overflow-x-auto pb-1 lg:order-none lg:w-[236px] lg:shrink-0 lg:flex-col lg:overflow-visible lg:pb-0">
+      <div className="order-2 flex gap-3 overflow-x-auto pb-1 lg:order-none lg:w-[260px] lg:shrink-0 lg:flex-col lg:self-start lg:overflow-visible lg:pb-0">
         {projects.map((item, i) => {
           const active = i === index;
           return (
@@ -118,7 +118,7 @@ const WorkShowcase = () => {
               </div>
             </div>
 
-            <div className="rounded-[32px] bg-surface p-4 shadow-neu">
+            <div className="self-start rounded-[32px] bg-surface p-4 shadow-neu">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-surface-sunk shadow-neu-in-sm">
                 <Image
                   src={project.image}
