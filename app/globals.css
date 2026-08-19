@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --nav-h: 76px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-color: #cccdd4 #e9e9ee;
+  }
+
+  body {
+    @apply bg-surface font-sans text-ink antialiased;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    caret-color: theme(colors.accent.DEFAULT);
+  }
+
+  ::selection {
+    background: #d3d4f7;
+    color: #1a1b2e;
+  }
+
+  /* Custom scrollbar — the browser surface belongs to the design too. */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e9e9ee;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d9dae0;
+    border: 3px solid #e9e9ee;
+    border-radius: 999px;
+    box-shadow: inset 1px 1px 2px #ffffff, inset -1px -1px 2px #c6c7ce;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #cfd0d7;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme(colors.accent.DEFAULT);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  a {
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    text-wrap: balance;
+    letter-spacing: -0.035em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Numerals in stats and tables line up. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+@layer components {
+  /* --- Neumorphic primitives: one light source, top-left, everywhere. --- */
+  .neu {
+    @apply bg-surface shadow-neu rounded-[28px];
+  }
+  .neu-sm {
+    @apply bg-surface shadow-neu-sm rounded-2xl;
+  }
+  .neu-lg {
+    @apply bg-surface shadow-neu-lg rounded-[36px];
+  }
+  .neu-in {
+    @apply bg-surface shadow-neu-in rounded-[28px];
+  }
+  .neu-in-sm {
+    @apply bg-surface shadow-neu-in-sm rounded-xl;
+  }
+
+  /* Interactive: extruded at rest, pressed on activation. */
+  .neu-press {
+    @apply bg-surface shadow-neu rounded-2xl transition-[box-shadow,transform,color] duration-300 ease-soft;
+  }
+  .neu-press:hover {
+    @apply shadow-neu-lg;
+  }
+  .neu-press:active {
+    @apply shadow-neu-in;
+    transform: translateY(1px);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm text-ink-muted shadow-neu-flat;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-2xl px-7 py-4 font-display text-[15px] font-semibold tracking-tight
+           transition-[box-shadow,transform,color,background-color] duration-300 ease-soft;
+  }
+  .btn-primary {
+    @apply btn bg-graphite text-[#f2f2f5];
+    box-shadow: 7px 7px 16px #c0c1c9, -7px -7px 16px #ffffff;
+  }
+  .btn-primary:hover {
+    @apply bg-graphite-soft;
+    box-shadow: 12px 12px 24px #babbc4, -12px -12px 24px #ffffff;
+  }
+  .btn-primary:active {
+    box-shadow: inset 5px 5px 10px #101117, inset -5px -5px 10px #3a3b47;
+    transform: translateY(1px);
+  }
+  .btn-ghost {
+    @apply btn neu-press text-ink;
+  }
+  .btn-ghost:hover {
+    @apply text-accent;
+  }
+
+  .field {
+    @apply w-full rounded-2xl bg-surface px-5 py-4 text-[15px] text-ink shadow-neu-in-sm outline-none
+           transition-shadow duration-300 ease-soft placeholder:text-ink-faint;
+  }
+  .field:focus {
+    box-shadow: inset 4px 4px 9px #c9cad1, inset -4px -4px 9px #ffffff, 0 0 0 2px rgba(76, 79, 212, 0.4);
+  }
+
+  .rule {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, #cccdd4 18%, #cccdd4 82%, transparent);
+    box-shadow: 0 1px 0 #f6f6f9;
+  }
+}
+
+@layer utilities {
+  .engraved {
+    color: transparent;
+    -webkit-text-stroke: 1.5px #d2d3da;
+    text-shadow: 1px 1px 1px #ffffff, -1px -1px 1px #c2c3cb;
+  }
+  .stack-tight > * + * {
+    margin-top: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
