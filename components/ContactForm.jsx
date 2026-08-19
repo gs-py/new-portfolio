@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FiSend, FiCheck } from "react-icons/fi";
 import emailjs from "emailjs-com";
 import { profile } from "@/lib/data";
+import { track } from "@/lib/analytics";
 
 const SERVICES = [
   "Web Development",
@@ -26,6 +27,7 @@ const ContactForm = () => {
     setStatus("sending");
 
     const data = new FormData(formRef.current);
+    track("contact_form_submit", { service: data.get("service") });
 
     emailjs
       .sendForm(
@@ -36,6 +38,7 @@ const ContactForm = () => {
       )
       .then(() => {
         setStatus("sent");
+        track("generate_lead", { service: data.get("service"), form_location: "contact_page" });
         formRef.current?.reset();
 
         // Acknowledgement to the sender — failure here must not flip the visible status.
@@ -53,7 +56,10 @@ const ContactForm = () => {
           )
           .catch(() => {});
       })
-      .catch(() => setStatus("error"));
+      .catch((error) => {
+        setStatus("error");
+        track("contact_form_error", { message: error?.text ?? "send_failed" });
+      });
   };
 
   return (

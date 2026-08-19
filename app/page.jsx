@@ -4,13 +4,35 @@ import { FiArrowUpRight, FiArrowRight } from "react-icons/fi";
 import HeroWidget from "@/components/HeroWidget";
 import Counter from "@/components/Counter";
 import Social from "@/components/Social";
+import JsonLd from "@/components/JsonLd";
 import { headlineStats, profile, projects, skillGroups } from "@/lib/data";
+import { SITE_DESCRIPTION, pageMeta } from "@/lib/seo";
+import { graph, personSchema, projectsSchema, webPageSchema } from "@/lib/schema";
+
+export const metadata = pageMeta({
+  title: "Home",
+  description: SITE_DESCRIPTION,
+  path: "/",
+  eyebrow: profile.role,
+  socialTitle: `${profile.name} — ${profile.role}`,
+});
 
 const Home = () => {
   const [lead, ...rest] = projects.slice(0, 3);
 
   return (
     <>
+      <JsonLd
+        data={graph(
+          webPageSchema({
+            path: "/",
+            name: `${profile.name} — ${profile.role}`,
+            description: SITE_DESCRIPTION,
+          }),
+          projectsSchema
+        )}
+      />
+
       {/* Hero */}
       <section className="container pb-8 pt-10 lg:pb-20 lg:pt-16">
         <div className="flex flex-col items-center gap-14 lg:flex-row lg:items-center lg:justify-between lg:gap-16">

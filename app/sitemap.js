@@ -1,13 +1,31 @@
-import { navLinks } from "@/lib/data";
+import { posts, projects } from "@/lib/data";
+import { SITE_URL, abs } from "@/lib/seo";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gladwinsanthosh.dpdns.org";
+/** Rebuilt on every deploy, so build time is an honest lastModified. */
+const buildDate = new Date();
 
 export default function sitemap() {
-  const now = new Date();
-  return navLinks.map((link) => ({
-    url: `${base}${link.path}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: link.path === "/" ? 1 : 0.7,
+  const routes = [
+    { path: "/", priority: 1, changeFrequency: "monthly" },
+    { path: "/work", priority: 0.9, changeFrequency: "monthly", images: projects.map((p) => abs(p.image)) },
+    { path: "/services", priority: 0.8, changeFrequency: "yearly" },
+    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+    { path: "/resume", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
+  ].map((route) => ({
+    url: `${SITE_URL}${route.path}`,
+    lastModified: buildDate,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+    ...(route.images ? { images: route.images } : {}),
   }));
+
+  const articles = posts.map((post) => ({
+    url: abs(`/blog/${post.slug}`),
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: "yearly",
+    priority: 0.7,
+  }));
+
+  return [...routes, ...articles];
 }

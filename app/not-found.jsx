@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
 
-export const metadata = { title: "Page not found" };
+export const metadata = {
+  title: "Page not found",
+  // A soft 404 that ranks is worse than no page at all.
+  robots: { index: false, follow: true },
+};
 
 const NotFound = () => (
   <section className="container flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">

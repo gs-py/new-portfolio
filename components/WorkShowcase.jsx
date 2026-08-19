@@ -7,13 +7,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FaGithub } from "react-icons/fa";
 import { projects } from "@/lib/data";
+import { track } from "@/lib/analytics";
 
 const ease = [0.22, 1, 0.36, 1];
 
 const WorkShowcase = () => {
   const [index, setIndex] = useState(0);
   const project = projects[index];
-  const go = (step) => setIndex((i) => (i + step + projects.length) % projects.length);
+
+  const select = (i, method) => {
+    setIndex(i);
+    track("select_content", { content_type: "project", item_id: projects[i].title, method });
+  };
+  const go = (step) => select((index + step + projects.length) % projects.length, "arrow");
 
   return (
     <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-16">
@@ -28,7 +34,7 @@ const WorkShowcase = () => {
             <button
               key={item.title}
               type="button"
-              onClick={() => setIndex(i)}
+              onClick={() => select(i, "rail")}
               aria-pressed={active}
               className={`flex min-w-[210px] items-center gap-3 rounded-[22px] px-4 py-3.5 text-left transition-[box-shadow,color] duration-400 ease-soft lg:min-w-0 ${
                 active ? "shadow-neu-in text-ink" : "bg-surface shadow-neu-sm text-ink-muted hover:text-ink"
@@ -81,6 +87,7 @@ const WorkShowcase = () => {
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track("project_link_click", { item_id: project.title, link_type: "live" })}
                     className="neu-press flex h-[60px] w-[60px] items-center justify-center !rounded-full text-xl text-ink hover:text-accent"
                     aria-label={`${project.title} — live site`}
                   >
@@ -92,6 +99,7 @@ const WorkShowcase = () => {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track("project_link_click", { item_id: project.title, link_type: "github" })}
                     className="neu-press flex h-[60px] w-[60px] items-center justify-center !rounded-full text-xl text-ink hover:text-accent"
                     aria-label={`${project.title} — source on GitHub`}
                   >

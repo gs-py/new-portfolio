@@ -2,12 +2,20 @@ import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
 import ContactForm from "@/components/ContactForm";
 import Social from "@/components/Social";
 import Clock from "@/components/Clock";
+import JsonLd from "@/components/JsonLd";
 import { profile } from "@/lib/data";
+import { pageMeta } from "@/lib/seo";
+import { breadcrumbSchema, graph, webPageSchema } from "@/lib/schema";
 
-export const metadata = {
+const description =
+  "Get in touch with Gladwin Santhosh — Full Stack Developer based in Thrissur, Kerala. Freelance work, full-time roles, or a question about something I shipped.";
+
+export const metadata = pageMeta({
   title: "Contact",
-  description: "Get in touch with Gladwin Santhosh — Full Stack Developer based in Thrissur, Kerala.",
-};
+  description,
+  path: "/contact",
+  eyebrow: "Get in touch",
+});
 
 const details = [
   { icon: <FiPhone />, label: "Phone", value: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}` },
@@ -17,6 +25,12 @@ const details = [
 
 const Contact = () => (
   <section className="container py-12 lg:py-20">
+    <JsonLd
+      data={graph(
+        webPageSchema({ type: "ContactPage", path: "/contact", name: "Contact", description }),
+        breadcrumbSchema([{ name: "Contact", path: "/contact" }])
+      )}
+    />
     <div className="max-w-[56ch]">
       <h1 className="font-display text-[clamp(2.2rem,5vw,3.4rem)] font-bold leading-[1.05]">Contact</h1>
       <p className="mt-4 text-[17px] leading-relaxed text-ink-muted">

@@ -1,15 +1,29 @@
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
+import JsonLd from "@/components/JsonLd";
 import { services } from "@/lib/data";
+import { pageMeta } from "@/lib/seo";
+import { breadcrumbSchema, graph, servicesSchema, webPageSchema } from "@/lib/schema";
 
-export const metadata = {
+const description =
+  "Web and mobile development, backend and API work, SEO engineering, UI/UX design, and applied machine learning — six things shipped in production every week.";
+
+export const metadata = pageMeta({
   title: "Services",
-  description:
-    "Web and mobile development, backend and API work, SEO engineering, UI/UX design, and applied machine learning.",
-};
+  description,
+  path: "/services",
+  eyebrow: "What I build",
+});
 
 const Services = () => (
   <section className="container py-12 lg:py-20">
+    <JsonLd
+      data={graph(
+        webPageSchema({ type: "CollectionPage", path: "/services", name: "Services", description }),
+        breadcrumbSchema([{ name: "Services", path: "/services" }]),
+        servicesSchema
+      )}
+    />
     <div>
       <h1 className="font-display text-[clamp(2.2rem,5vw,3.4rem)] font-bold leading-[1.05]">
         What I can build for you

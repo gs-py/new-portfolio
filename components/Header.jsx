@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
 import { navLinks, profile } from "@/lib/data";
+import { track } from "@/lib/analytics";
 
 /** Apple's move/reposition spring: critically damped, 0.4s response. */
 const NAV_SPRING = { type: "spring", bounce: 0, duration: 0.4 };
@@ -61,6 +62,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
+            onClick={() => track("cta_click", { cta: "hire_me", location: "header" })}
             className="btn-primary hidden !rounded-full !px-5 !py-3 !text-[14px] md:inline-flex"
           >
             Hire me
